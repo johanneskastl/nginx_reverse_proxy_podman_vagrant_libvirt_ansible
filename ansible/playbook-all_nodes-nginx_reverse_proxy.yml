@@ -1,0 +1,36 @@
+---
+- name: 'Nginx reverse proxy'
+  hosts: 'all'
+  gather_facts: true
+  become: false
+
+  handlers:
+
+    - name: Restart the nginx reverse proxy container
+      containers.podman.podman_container:
+        state: started
+        restart: true
+        name: nginx-proxy
+
+  tasks:
+
+    - name: Create the nginx reverse proxy configuration snippet
+      ansible.builtin.template:
+        src: proxy.conf.j2
+        dest: /home/vagrant/proxy.conf
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+      notify:
+        - Restart the nginx reverse proxy container
+
+    - name: Create the nginx reverse proxy container
+      containers.podman.podman_container:
+        state: started
+        name: nginx-proxy
+        debug: true
+        image: docker.io/library/nginx:latest
+        publish:
+          - '80:80'
+        volumes:
+          - '/home/vagrant/proxy.conf:/etc/nginx/conf.d/proxy.conf:z'
