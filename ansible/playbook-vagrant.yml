@@ -25,11 +25,8 @@
 - name: Run playbook-all_nodes-podman_socket_etc.yml
   ansible.builtin.import_playbook: playbook-all_nodes-podman_socket_etc.yml
 
-- name: Run playbook-all_nodes-nginx_server_quadlet.yml
-  ansible.builtin.import_playbook: playbook-all_nodes-nginx_server_quadlet.yml
-
-- name: Run playbook-all_nodes-nginx_reverse_proxy_quadlet.yml
-  ansible.builtin.import_playbook: playbook-all_nodes-nginx_reverse_proxy_quadlet.yml
+- name: Run playbook-all_nodes-create_containers.conf.yml
+  ansible.builtin.import_playbook: playbook-all_nodes-create_containers.conf.yml
 
 - name: Run playbook-all_nodes-output_URLs.yml
   ansible.builtin.import_playbook: playbook-all_nodes-output_URLs.yml
