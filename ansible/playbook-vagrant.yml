@@ -15,3 +15,6 @@
 
 - name: Run playbook-all_nodes-install_podman.yml
   ansible.builtin.import_playbook: playbook-all_nodes-install_podman.yml
+
+- name: Run playbook-all_nodes-install_curl.yml
+  ansible.builtin.import_playbook: playbook-all_nodes-install_curl.yml
