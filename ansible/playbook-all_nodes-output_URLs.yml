@@ -1,0 +1,19 @@
+---
+- name: 'Output the URLs'
+  hosts: 'all'
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: 'Nginx server URL without proxy'
+      ansible.builtin.debug:
+        msg: "URL: http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8080"
+
+    - name: 'Nginx proxy URL'
+      ansible.builtin.debug:
+        msg: "URL: http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80"
+
+    - name: 'Nginx URL via reverse proxy'
+      ansible.builtin.debug:
+        msg: "URL: http://nginx.{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}.sslip.io"
