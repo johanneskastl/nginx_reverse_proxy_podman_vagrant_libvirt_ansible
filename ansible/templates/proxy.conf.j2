@@ -1,0 +1,8 @@
+server {
+  listen 80;
+  server_name nginx.{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}.sslip.io;
+
+  location / {
+    proxy_pass http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address']  }}:8080;
+  }
+}
