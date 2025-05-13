@@ -9,10 +9,9 @@ The other Nginx container is acting as a reverse proxy and is forwarding
 requests for `nginx.192.0.2.13.sslip.io` to the other server, while it serves
 Nginx's default page when being called by e.g. its IP address only.
 
-The `main` branch that you are currently on is using Podman Quadlets to manage
-the containers.
+The `main` branch is using Podman Quadlets to manage the containers.
 
-The second branch `non-quadlet_containers` uses ... well, non-quadlet
+This branch called `non-quadlet_containers` uses ... well, non-quadlet
 containers.
 
 Default OS is AlmaLinux 9, but that can be changed in the Vagrantfile.
