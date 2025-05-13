@@ -18,3 +18,6 @@
 
 - name: Run playbook-all_nodes-install_curl.yml
   ansible.builtin.import_playbook: playbook-all_nodes-install_curl.yml
+
+- name: Run playbook-all_nodes-sysctl_allow_port_80_unprivileged.yml
+  ansible.builtin.import_playbook: playbook-all_nodes-sysctl_allow_port_80_unprivileged.yml
