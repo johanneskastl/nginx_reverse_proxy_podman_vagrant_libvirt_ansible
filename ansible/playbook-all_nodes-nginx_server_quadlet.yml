@@ -1,0 +1,63 @@
+---
+- name: 'Nginx server'
+  hosts: 'all'
+  gather_facts: true
+  become: false
+
+  handlers:
+
+    - name: Restart the nginx server container
+      ansible.builtin.service:
+        name: nginx-server
+        state: restarted
+      when:
+        - not nginx_server_container_started.changed | bool
+
+  tasks:
+
+    - name: Create the nginx index.html
+      ansible.builtin.copy:
+        dest: /home/vagrant/index.html
+        content: |
+          Hello from vagrant-libvirt
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+      notify:
+        - Restart the nginx server container
+
+    - name: Create the nginx server container
+      containers.podman.podman_container:
+        state: quadlet
+        name: nginx-server
+        debug: true
+        image: docker.io/library/nginx:latest
+        network: nginx.network
+        publish:
+          - '8080:80'
+        volumes:
+          - '/home/vagrant/index.html:/usr/share/nginx/html/index.html:z'
+        quadlet_options:
+          - |
+            [Unit]
+            Description=Nginx Server
+
+            [Install]
+            WantedBy=default.target
+      notify:
+        - Restart the nginx server container
+
+    - name: Start the nginx server container service
+      ansible.builtin.systemd:
+        name: nginx-server.service
+        state: started
+        scope: user
+        daemon_reload: true
+      register: nginx_server_container_started
+
+    - name: Enable the nginx server container service
+      ansible.builtin.systemd:
+        name: nginx-server.service
+        enabled: true
+        scope: user
+        daemon_reload: true
