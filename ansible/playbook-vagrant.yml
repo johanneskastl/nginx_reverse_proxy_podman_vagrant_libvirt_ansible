@@ -21,3 +21,6 @@
 
 - name: Run playbook-all_nodes-sysctl_allow_port_80_unprivileged.yml
   ansible.builtin.import_playbook: playbook-all_nodes-sysctl_allow_port_80_unprivileged.yml
+
+- name: Run playbook-all_nodes-podman_socket_etc.yml
+  ansible.builtin.import_playbook: playbook-all_nodes-podman_socket_etc.yml
